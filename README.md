@@ -6,3 +6,4 @@ Newly acquired skills:
  - reading a dataset
  - visualize the dataset in different ways
  - select and clean unnesseray information from the data 
+
