@@ -20,6 +20,7 @@ def describe(path: str):
             s_data = sorted(data)
             count = len(data)
             mean = data.sum() / count
+            # print(f"{sum(pow(x - mean, 2) for x in s_data)}")
             std = math.sqrt((sum(pow(x - mean, 2) for x in s_data) / count))
             minimum = s_data[0]
             q25 = s_data[int(0.25 * count)]
