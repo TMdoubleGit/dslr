@@ -2,6 +2,17 @@ import pandas as pd
 import math
 import sys
 
+def cleanData(dataframe):
+    """
+    This function replaces the NA values of a dataframe by 0.
+    """
+    for col in dataframe.columns:
+        dataframe[col].fillna(int(0), inplace=True)
+    
+    print(dataframe)
+    return dataframe
+
+
 def describe(path: str):
     """
     This function loads a csv file and displays few statistics.
@@ -13,6 +24,7 @@ def describe(path: str):
 
         numerical_features = dataset.select_dtypes(include=['number'])
         dataset_to_analyse = dataset[numerical_features.columns]
+        dataset_to_analyse = cleanData(dataset_to_analyse)
 
         stats = []
         for colonne in dataset_to_analyse.columns:
@@ -20,7 +32,6 @@ def describe(path: str):
             s_data = sorted(data)
             count = len(data)
             mean = data.sum() / count
-            # print(f"{sum(pow(x - mean, 2) for x in s_data)}")
             std = math.sqrt((sum(pow(x - mean, 2) for x in s_data) / count))
             minimum = s_data[0]
             q25 = s_data[int(0.25 * count)]
