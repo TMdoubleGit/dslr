@@ -2,14 +2,6 @@ import pandas as pd
 import math
 import sys
 
-def cleanData(dataframe):
-    """
-    This function replaces the NA values of a dataframe by 0.
-    """
-    dataframe.fillna(0, inplace=True)
-    return dataframe
-
-
 def describe(path: str):
     """
     This function loads a csv file and displays few statistics.
@@ -20,7 +12,7 @@ def describe(path: str):
             dataset = pd.DataFrame(dataset)
 
         numerical_features = dataset.select_dtypes(include=['number'])
-        dataset_to_analyse = cleanData(dataset[numerical_features.columns])
+        dataset_to_analyse = dataset[numerical_features.columns].fillna(0, inplace = False)
 
         stats = []
         for colonne in dataset_to_analyse.columns:
