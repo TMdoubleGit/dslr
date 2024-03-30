@@ -44,10 +44,6 @@ def describe(path: str):
     except Exception as e:
         print(f"Error: {e}")
 
-def main():
+if __name__ == "__main__":
     av = sys.argv
     describe(av[1])
-    return
-
-if __name__ == "__main__":
-    main()
