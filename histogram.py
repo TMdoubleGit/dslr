@@ -1,11 +1,35 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import sys
+from sklearn.preprocessing import MinMaxScaler
+
+def normalize_dataset(dataset):
+    """
+    Normalize each column in the dataset.
+    
+    Parameters:
+    dataset (DataFrame): The input dataset to be normalized.
+    
+    Returns:
+    DataFrame: The normalized dataset.
+    """
+    scaler = MinMaxScaler()
+    normalized_dataset = dataset.copy()
+    for column in dataset.columns:
+        if dataset[column].dtype in ['int64', 'float64']:
+            column_data = dataset[column].values.reshape(-1, 1)
+            normalized_column = scaler.fit_transform(column_data)
+            normalized_dataset[column] = normalized_column.flatten()
+    return normalized_dataset
 
 def histogram(path: str):
     """
     This function displays histograms, one per course,
     showing the score distribution between all four Hogwarts' houses.
+
+    Parameters: path of the dataset you want to visualize.
+
+    Returns: none.
     """
 
     try:
@@ -17,6 +41,7 @@ def histogram(path: str):
         dataset_to_display = dataset[numerical_features.columns].fillna(0, inplace = False)
 
         columns_to_plot = dataset_to_display.columns
+        norm_c_to_p = normalize_dataset(columns_to_plot)
         categories = dataset["Hogwarts House"].unique()
 
         houses_colors ={'Hufflepuff': 'yellow', 'Slytherin':'green', 'Ravenclaw': 'blue', 'Gryffindor': 'red'}
