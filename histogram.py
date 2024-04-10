@@ -41,7 +41,7 @@ def histogram(path: str):
         dataset_to_display = dataset[numerical_features.columns].fillna(0, inplace = False)
 
         columns_to_plot = dataset_to_display.columns
-        norm_c_to_p = normalize_dataset(columns_to_plot)
+        # norm_c_to_p = normalize_dataset(columns_to_plot)
         categories = dataset["Hogwarts House"].unique()
 
         houses_colors ={'Hufflepuff': 'yellow', 'Slytherin':'green', 'Ravenclaw': 'blue', 'Gryffindor': 'red'}
