@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import sys
 from sklearn.preprocessing import MinMaxScaler
 
@@ -41,27 +42,48 @@ def histogram(path: str):
         dataset_to_display = dataset[numerical_features.columns].fillna(0, inplace = False)
 
         columns_to_plot = dataset_to_display.columns
-        # norm_c_to_p = normalize_dataset(columns_to_plot)
         categories = dataset["Hogwarts House"].unique()
 
         houses_colors ={'Hufflepuff': 'yellow', 'Slytherin':'green', 'Ravenclaw': 'blue', 'Gryffindor': 'red'}
-        fig,axs= plt.subplots(nrows=len(columns_to_plot), figsize=(10, 10))
+        num_columns = 4
+        num_rows = 4
+        fig,axs= plt.subplots(nrows=4, ncols=4, figsize=(15, 20))
+        plt.subplots_adjust(hspace=25, wspace=10)
+
+        legend_labels = []
+        legend_handles = []
 
         for i, col in enumerate(columns_to_plot):
+            row = i // num_columns
+            column = i % num_columns
             for j, category in enumerate(categories):
                 data = dataset[dataset["Hogwarts House"] == category][col]
-                axs[i].hist(data, bins=10, alpha=0.5, color=houses_colors.get(category, 'black'), label=category, orientation='vertical')
-            axs[i].set_title(col)
-            axs[i].set_xlabel('Hogwarts House')
-            axs[i].set_ylabel("Scores")
-            # axs[i].legend()
+                axs[row, column].hist(data, bins=15, alpha=0.5, color=houses_colors.get(category, 'black'), label=category, orientation='vertical')
+                if category not in legend_labels:
+                    label = category
+                    handles, _ = axs[row, column].get_legend_handles_labels()
+                    legend_labels.append(label)
+                    legend_handles.append((mpatches.Patch(alpha=0.5, color=houses_colors.get(category, 'black'), label=category))
+)
+
+            axs[row, column].set_title(col, fontsize=10)
+            axs[row, column].tick_params(axis='x', labelsize=7)
+            axs[row, column].tick_params(axis='y', labelsize=7)
+
+        plt.legend(legend_handles, legend_labels, loc='lower right', bbox_to_anchor=(1, 0))
+
+        for i in range(len(columns_to_plot), num_rows * num_columns):
+            row = i // num_columns
+            col = i % num_columns
+            axs[row, col].axis('off')
 
         plt.tight_layout()
-
         plt.show()
 
     except Exception as e:
         print(f"Error: {e}")
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
     av = sys.argv
