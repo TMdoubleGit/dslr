@@ -4,26 +4,6 @@ import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.patches as mpatches
 import sys
-from sklearn.preprocessing import MinMaxScaler
-
-def normalize_dataset(dataset):
-    """
-    Normalize each column in the dataset.
-    
-    Parameters:
-    dataset (DataFrame): The input dataset to be normalized.
-    
-    Returns:
-    DataFrame: The normalized dataset.
-    """
-    scaler = MinMaxScaler()
-    normalized_dataset = dataset.copy()
-    for column in dataset.columns:
-        if dataset[column].dtype in ['int64', 'float64']:
-            column_data = dataset[column].values.reshape(-1, 1)
-            normalized_column = scaler.fit_transform(column_data)
-            normalized_dataset[column] = normalized_column.flatten()
-    return normalized_dataset
 
 def histogram(path: str):
     """
@@ -76,7 +56,7 @@ def histogram(path: str):
             axs[row, column].tick_params(axis='x', labelsize=7)
             axs[row, column].tick_params(axis='y', labelsize=7)
 
-        plt.legend(legend_handles, legend_labels, loc='lower right', bbox_to_anchor=(1, 0))
+        plt.legend(legend_handles, legend_labels, loc='lower right', bbox_to_anchor=(1, 0),fontsize=8).set_title('Hogwarts Houses')
 
         for i in range(len(columns_to_plot), num_rows * num_columns):
             row = i // num_columns
