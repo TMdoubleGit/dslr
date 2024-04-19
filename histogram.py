@@ -1,5 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.patches as mpatches
 import sys
 from sklearn.preprocessing import MinMaxScaler
@@ -46,9 +48,14 @@ def histogram(path: str):
 
         houses_colors ={'Hufflepuff': 'yellow', 'Slytherin':'green', 'Ravenclaw': 'blue', 'Gryffindor': 'red'}
         num_columns = 4
-        num_rows = 4
-        fig,axs= plt.subplots(nrows=4, ncols=4, figsize=(15, 20))
-        plt.subplots_adjust(hspace=25, wspace=10)
+        num_rows = -(-len(columns_to_plot) // num_columns)
+
+        root = tk.Tk()
+        root.title("Histograms")
+
+        fig,axs= plt.subplots(nrows=num_rows, ncols=num_columns, figsize=(20, 10))
+
+        plt.subplots_adjust(left=0.1, right=0.9, bottom=0.1, top=0.9, hspace=25, wspace=10)
 
         legend_labels = []
         legend_handles = []
@@ -63,8 +70,7 @@ def histogram(path: str):
                     label = category
                     handles, _ = axs[row, column].get_legend_handles_labels()
                     legend_labels.append(label)
-                    legend_handles.append((mpatches.Patch(alpha=0.5, color=houses_colors.get(category, 'black'), label=category))
-)
+                    legend_handles.append((mpatches.Patch(alpha=0.5, color=houses_colors.get(category, 'black'), label=category)))
 
             axs[row, column].set_title(col, fontsize=10)
             axs[row, column].tick_params(axis='x', labelsize=7)
@@ -77,8 +83,15 @@ def histogram(path: str):
             col = i % num_columns
             axs[row, col].axis('off')
 
+        note = "Note: x-axis represents the scores and y-axis the students' repartition given their score"
+        plt.text(0.99, 0.01, note, transform=fig.transFigure, fontsize=7, ha="right", va="bottom")
         plt.tight_layout()
-        plt.show()
+
+        canvas = FigureCanvasTkAgg(fig, master=root)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+        root.mainloop()
 
     except Exception as e:
         print(f"Error: {e}")
