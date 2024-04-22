@@ -26,7 +26,7 @@ def histogram(path: str):
         columns_to_plot = dataset_to_display.columns
         categories = dataset["Hogwarts House"].unique()
 
-        houses_colors ={'Hufflepuff': 'yellow', 'Slytherin':'green', 'Ravenclaw': 'blue', 'Gryffindor': 'red'}
+        houses_colors ={'Hufflepuff': 'gold', 'Slytherin':'green', 'Ravenclaw': 'royalblue', 'Gryffindor': 'firebrick'}
         num_columns = 4
         num_rows = -(-len(columns_to_plot) // num_columns)
 
