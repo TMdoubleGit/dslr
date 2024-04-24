@@ -32,10 +32,13 @@ def histogram(path: str):
 
         root = tk.Tk()
         root.title("Histograms")
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        root.geometry(f"{screen_width}x{screen_height}+0+0")
 
-        fig,axs= plt.subplots(nrows=num_rows, ncols=num_columns, figsize=(20, 10))
+        fig,axs= plt.subplots(nrows=num_rows, ncols=num_columns)
 
-        plt.subplots_adjust(left=0.1, right=0.9, bottom=0.1, top=0.9, hspace=25, wspace=10)
+        plt.subplots_adjust(left=0.1, right=0.9, bottom=0.1, top=0.9, hspace=0.4, wspace=0.3)
 
         legend_labels = []
         legend_handles = []
@@ -63,14 +66,13 @@ def histogram(path: str):
             col = i % num_columns
             axs[row, col].axis('off')
 
-        note = "Note: x-axis represents the scores and y-axis the students' repartition given their score"
-        plt.text(0.99, 0.01, note, transform=fig.transFigure, fontsize=7, ha="right", va="bottom")
+        note = "Note:\n x-axis represents the scores and y-axis the students' repartition given their score"
+        plt.text(0.01, 0.01, note, transform=fig.transFigure, fontsize=7, ha="left", va="bottom")
         plt.tight_layout()
 
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
         canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-
         root.mainloop()
 
     except Exception as e:
