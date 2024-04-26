@@ -62,8 +62,6 @@ def scatter_plots(dataset, features):
     note = "Notes:\nfeature[0] vs feature[1] where x-axis is the score of feature[0] and y-axis is the score of feature[1]\nDADA stands for Defense Against the Dark Arts"
     plt.text(0.01, 0.01, note, transform=fig.transFigure, fontsize=7, ha="left", va="bottom")
 
-    plt.tight_layout()
-
     canvas = FigureCanvasTkAgg(fig, master=root)
     canvas.draw()
     canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
@@ -94,8 +92,6 @@ def scatter_plots_from_csv(path: str):
 
     except Exception as e:
         print(f"Error: {e}")
-        import traceback
-        traceback.print_exc()
 
 if __name__ == "__main__":
     av = sys.argv

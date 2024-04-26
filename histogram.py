@@ -68,7 +68,6 @@ def histogram(path: str):
 
         note = "Note:\n x-axis represents the scores and y-axis the students' repartition given their score"
         plt.text(0.01, 0.01, note, transform=fig.transFigure, fontsize=7, ha="left", va="bottom")
-        plt.tight_layout()
 
         canvas = FigureCanvasTkAgg(fig, master=root)
         canvas.draw()
@@ -77,8 +76,6 @@ def histogram(path: str):
 
     except Exception as e:
         print(f"Error: {e}")
-        import traceback
-        traceback.print_exc()
 
 if __name__ == "__main__":
     av = sys.argv
