@@ -35,6 +35,15 @@ def model(X, w):
     return X.dot(w)
 
 def grad(X, y, w):
+    """
+    XX.
+
+    Parameters:
+        - X: matrix containing the features. Each row represents an observation and each column represents a feature.
+        - w: vector containing the model's weights. Each weight corresponds to a feature in the data.
+
+    Returns: XX.
+    """
     m = len(y)
     return (1/m * X.T.dot(model(X, w) - y))
 
