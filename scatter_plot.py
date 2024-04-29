@@ -1,32 +1,34 @@
 import pandas as pd
-import matplotlib.pyplot as plt
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import sys
 
-def scatter_plots(dataset, features):
+def scatter_plots(dataset, features, save_path):
     """
-    This function generates scatter plots for all possible combinations of features.
+    Generate scatter plots for all possible combinations of features.
 
     Parameters:
-        - dataset: pandas DataFrame containing the dataset.
-        - features: list of features (columns) to use for generating scatter plots.
+        dataset (pd.DataFrame): Pandas DataFrame containing the dataset.
+        features (list): List of feature combinations to use for generating scatter plots.
+        save_path (str): Path to save the output .jpg file.
 
-    Returns: none.
+    Returns:
+        None
     """
-    houses_colors ={'Hufflepuff': 'gold', 'Slytherin':'green', 'Ravenclaw': 'royalblue', 'Gryffindor': 'firebrick'}
+    houses_colors = {'Hufflepuff': 'gold', 'Slytherin': 'green', 'Ravenclaw': 'royalblue', 'Gryffindor': 'firebrick'}
     num_plots = len(features)
     num_columns = 10
     num_rows = -(-num_plots // num_columns)
 
-    root=tk.Tk()
+    root = tk.Tk()
     root.title("Scatter plots")
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     root.geometry(f"{screen_width}x{screen_height}+0+0")
 
-    fig, axs = plt.subplots(nrows=num_rows, ncols=num_columns)
+    fig, axs = plt.subplots(nrows=num_rows, ncols=num_columns, figsize=(16, 10))
 
     plt.subplots_adjust(left=0.1, right=0.9, bottom=0.1, top=0.9, hspace=0.4, wspace=0.3)
 
@@ -51,29 +53,31 @@ def scatter_plots(dataset, features):
 
         axs[row, col].tick_params(axis='both', which='both', length=0, labelleft=False, labelbottom=False, labeltop=False, labelright=False)
 
-
         for i in range(len(features), num_rows * num_columns):
             row = i // num_columns
             col = i % num_columns
             axs[row, col].axis('off')
 
     plt.legend(legend_handles, legend_labels, loc='lower right', bbox_to_anchor=(1, 0), fontsize=7).set_title('Hogwarts Houses')
-    
+
     note = "Notes:\nfeature[0] vs feature[1] where x-axis is the score of feature[0] and y-axis is the score of feature[1]\nDADA stands for Defense Against the Dark Arts"
     plt.text(0.01, 0.01, note, transform=fig.transFigure, fontsize=7, ha="left", va="bottom")
 
     canvas = FigureCanvasTkAgg(fig, master=root)
     canvas.draw()
     canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+    fig.savefig(save_path, format='jpg')
+
     root.mainloop()
 
-def scatter_plots_from_csv(path: str):
+def scatter_plots_from_csv(path, save_path):
     """
-    This function generates scatter plots based on the provided dataset.
+    Generate scatter plots based on the provided dataset.
 
-    Parameters: path of the dataset you want to visualize.
-
-    Returns: none.
+    Parameters:
+        path (str): Path of the dataset you want to visualize.
+        save_path (str): Path to save the output .jpg file.
     """
     try:
         dataset = pd.read_csv(path, index_col=0)
@@ -88,11 +92,11 @@ def scatter_plots_from_csv(path: str):
 
         combinations = [(columns_to_plot[i], columns_to_plot[j]) for i in range(len(columns_to_plot)) for j in range(i+1, len(columns_to_plot))]
 
-        scatter_plots(dataset, combinations)
+        scatter_plots(dataset, combinations, save_path)
 
     except Exception as e:
         print(f"Error: {e}")
 
 if __name__ == "__main__":
     av = sys.argv
-    scatter_plots_from_csv(av[1])
+    scatter_plots_from_csv(av[1], "./plotting output/scatter_plots.png")
