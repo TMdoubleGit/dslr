@@ -99,4 +99,4 @@ def scatter_plots_from_csv(path, save_path):
 
 if __name__ == "__main__":
     av = sys.argv
-    scatter_plots_from_csv(av[1], "./plotting output/scatter_plots.png")
+    scatter_plots_from_csv(av[1], "./plotting output/scatter_plot.png")
