@@ -125,16 +125,17 @@ def training(path):
         normalized_df = feature_scaling(df_subset)
         X = normalized_df[['Astronomy', 'Herbology']].values
 
+        X = np.nan_to_num(X, nan=0)
+
         label_encoder = LabelEncoder()
         y_encoded = label_encoder.fit_transform(normalized_df['Hogwarts House'])
         y = y_encoded.reshape(-1, 1)
 
         n_features = X.shape[1]
         w = np.zeros((n_features, 1))
-
         w_final = gradient_descent(X, y, w, learning_rate=0.001, n_iteration=100000)
-
         joblib.dump(w_final, "w_final.pkl")
+        joblib.dump(label_encoder, "label_encoder.pkl")
     
     except FileNotFoundError:
         print("Error: Specified file path does not exist.")
