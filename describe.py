@@ -12,7 +12,7 @@ def describe(path: str):
             dataset = pd.DataFrame(dataset)
 
         numerical_features = dataset.select_dtypes(include=['number'])
-        dataset_to_analyse = dataset[numerical_features.columns].fillna(0, inplace = False)
+        dataset_to_analyse = dataset[numerical_features.columns].ffill()
 
         stats = []
         for colonne in dataset_to_analyse.columns:

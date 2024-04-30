@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
 import joblib
+from scipy.special import expit
 import sys
 
 def feature_scaling(df):
@@ -49,7 +49,7 @@ def sigmoid(z):
     Returns:
         array-like: The output of the sigmoid function.
     """
-    return 1 / (1 + np.exp(-z))
+    return expit(z)
 
 # def logistic_loss(y_pred, y_true):
 #     """

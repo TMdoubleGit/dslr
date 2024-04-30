@@ -18,7 +18,7 @@ def create_histogram_figure(dataset, num_columns=4):
         axs (numpy.ndarray): Array of axes objects.
     """
     numerical_features = dataset.select_dtypes(include=['number'])
-    dataset_to_display = dataset[numerical_features.columns].fillna(0, inplace = False)
+    dataset_to_display = dataset[numerical_features.columns].ffill()
 
     columns_to_plot = dataset_to_display.columns
     categories = dataset["Hogwarts House"].unique()
