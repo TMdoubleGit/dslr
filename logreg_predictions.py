@@ -62,7 +62,7 @@ def predict(X, w_models, label_encoder):
     """
     probabilities = softmax(X.dot(w_models))
     predictions = np.argmax(probabilities, axis=1)
-    decoded_predictions = label_encoder.inverse_transform(predictions)
+    decoded_predictions = label_encoder.inverse_transform(predictions.flatten())
     return decoded_predictions
 
 def logreg_predict(path, output_path):
@@ -107,6 +107,8 @@ def logreg_predict(path, output_path):
 
     except Exception as e:
         print(f"Error: {e}")
+        import traceback
+        traceback.print_exc()
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
