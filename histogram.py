@@ -5,6 +5,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.patches as mpatches
 import sys
 
+
 def create_histogram_figure(dataset, num_columns=4):
     """
     Create and return a matplotlib figure containing histograms.
@@ -23,7 +24,7 @@ def create_histogram_figure(dataset, num_columns=4):
     columns_to_plot = dataset_to_display.columns
     categories = dataset["Hogwarts House"].unique()
 
-    houses_colors ={'Hufflepuff': 'gold', 'Slytherin':'green', 'Ravenclaw': 'royalblue', 'Gryffindor': 'firebrick'}
+    houses_colors = {'Hufflepuff': 'gold', 'Slytherin': 'green', 'Ravenclaw': 'royalblue', 'Gryffindor': 'firebrick'}
     num_rows = -(-len(columns_to_plot) // num_columns)
 
     fig, axs = plt.subplots(nrows=num_rows, ncols=num_columns, figsize=(16, 10))
@@ -49,7 +50,7 @@ def create_histogram_figure(dataset, num_columns=4):
         axs[row, column].tick_params(axis='x', labelsize=7)
         axs[row, column].tick_params(axis='y', labelsize=7)
 
-    plt.legend(legend_handles, legend_labels, loc='lower right', bbox_to_anchor=(1, 0),fontsize=8).set_title('Hogwarts Houses')
+    plt.legend(legend_handles, legend_labels, loc='lower right', bbox_to_anchor=(1, 0), fontsize=8).set_title('Hogwarts Houses')
 
     for i in range(len(columns_to_plot), num_rows * num_columns):
         row = i // num_columns
@@ -60,6 +61,7 @@ def create_histogram_figure(dataset, num_columns=4):
     plt.text(0.01, 0.01, note, transform=fig.transFigure, fontsize=7, ha="left", va="bottom")
 
     return fig, axs
+
 
 def histogram(path: str, save_path: str):
     """
@@ -89,13 +91,14 @@ def histogram(path: str, save_path: str):
         canvas.draw()
         canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
 
-        fig.savefig(save_path, format='jpg')
+        fig.savefig(save_path, format='png')
 
         root.mainloop()
 
     except Exception as e:
         print(f"Error: {e}")
 
+
 if __name__ == "__main__":
     av = sys.argv
-    histogram(av[1], "./plotting output/histogram.jpg")
+    histogram(av[1], "./plotting output/histogram.png")

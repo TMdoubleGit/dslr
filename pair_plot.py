@@ -5,6 +5,7 @@ import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import sys
 
+
 def pair_plots(dataset, save_path):
     """
     This function generates pair plots for all numerical features in the dataset.
@@ -40,6 +41,7 @@ def pair_plots(dataset, save_path):
 
     g.savefig(save_path, format='png')
 
+
 def pair_plots_from_csv(path, save_path):
     """
     This function generates pair plots based on the provided dataset.
@@ -63,8 +65,7 @@ def pair_plots_from_csv(path, save_path):
 
     except Exception as e:
         print(f"Error: {e}")
-        import traceback
-        traceback.print_exc()
+
 
 if __name__ == "__main__":
     av = sys.argv

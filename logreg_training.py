@@ -4,6 +4,7 @@ from sklearn.preprocessing import LabelEncoder
 import joblib
 import sys
 
+
 def feature_scaling(df):
     """
     Normalize the numerical features in the DataFrame using z-score normalization.
@@ -22,6 +23,7 @@ def feature_scaling(df):
             normalized_df[col] = (df[col] - col_mean) / col_std
     return normalized_df
 
+
 def softmax(z):
     """
     Compute the softmax function.
@@ -34,6 +36,7 @@ def softmax(z):
     """
     exp_z = np.exp(z)
     return exp_z / np.sum(exp_z, axis=1, keepdims=True)
+
 
 def grad(X, y, w):
     """
@@ -53,6 +56,7 @@ def grad(X, y, w):
     gradient = 1/m * X.T.dot(y_pred - y)
     return gradient
 
+
 def gradient_descent(X, y, w, learning_rate, n_iteration):
     """
     Perform gradient descent optimization to update the model weights.
@@ -70,6 +74,7 @@ def gradient_descent(X, y, w, learning_rate, n_iteration):
     for i in range(0, n_iteration):
         w = w - learning_rate * grad(X, y, w)
     return w
+
 
 def training(path):
     """
@@ -89,11 +94,11 @@ def training(path):
         dataset = pd.read_csv(path)
         if not isinstance(dataset, pd.DataFrame):
             dataset = pd.DataFrame(dataset)
-        
+
         df_subset = dataset.loc[:, ['Index', 'Hogwarts House', 'Astronomy', 'Herbology']]
 
         normalized_df = feature_scaling(df_subset).ffill()
-        
+
         X = normalized_df[['Astronomy', 'Herbology']].values
 
         label_encoder = LabelEncoder()
@@ -111,12 +116,13 @@ def training(path):
 
         joblib.dump(w_models, "w_models.pkl")
         joblib.dump(label_encoder, "label_encoder.pkl")
-    
+
     except FileNotFoundError:
         print("Error: Specified file path does not exist.")
     except Exception as e:
         print(f"Error: {e}")
-    
+
+
 if __name__ == "__main__":
     av = sys.argv
     training(av[1])

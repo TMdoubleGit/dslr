@@ -2,6 +2,7 @@ import pandas as pd
 import math
 import sys
 
+
 def describe(path: str):
     """
     This function loads a csv file and displays few statistics.
@@ -31,10 +32,11 @@ def describe(path: str):
             columns = ['Feature', 'Count', 'Mean', 'Std', 'Min', '25%', '50%', '75%', 'Max']
             formated_res = pd.DataFrame(stats, columns=columns)
             formated_res = formated_res.set_index('Feature').transpose()
-            
+
         print(formated_res)
     except Exception as e:
         print(f"Error: {e}")
+
 
 if __name__ == "__main__":
     av = sys.argv

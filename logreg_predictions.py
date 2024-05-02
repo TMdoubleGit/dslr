@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import LabelEncoder
 import joblib
 import sys
+
 
 def feature_scaling(df):
     """
@@ -22,6 +22,7 @@ def feature_scaling(df):
             normalized_df[col] = (df[col] - col_mean) / col_std
     return normalized_df
 
+
 def softmax(z):
     """
     Compute the softmax function.
@@ -35,6 +36,7 @@ def softmax(z):
     exp_z = np.exp(z)
     return exp_z / np.sum(exp_z, axis=1, keepdims=True)
 
+
 def model(X, w):
     """
     Compute the model's predictions based on the input features and weights.
@@ -47,6 +49,7 @@ def model(X, w):
         array-like: Predicted values.
     """
     return X.dot(w)
+
 
 def predict(X, w_models, label_encoder):
     """
@@ -64,6 +67,7 @@ def predict(X, w_models, label_encoder):
     predictions = np.argmax(probabilities, axis=1)
     decoded_predictions = label_encoder.inverse_transform(predictions.flatten())
     return decoded_predictions
+
 
 def logreg_predict(path, output_path):
     """
@@ -87,7 +91,7 @@ def logreg_predict(path, output_path):
         dataset = pd.read_csv(path)
         if not isinstance(dataset, pd.DataFrame):
             dataset = pd.DataFrame(dataset)
-        
+
         df_subset = dataset.loc[:, ['Index', 'Hogwarts House', 'Astronomy', 'Herbology']]
 
         normalized_df = feature_scaling(df_subset).ffill()
@@ -107,11 +111,10 @@ def logreg_predict(path, output_path):
 
     except Exception as e:
         print(f"Error: {e}")
-        import traceback
-        traceback.print_exc()
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Usage: python script.py input_csv output_csv")
+        print("Usage: python script.py dataset_test.csv output.csv")
         exit(1)
     logreg_predict(sys.argv[1], sys.argv[2])

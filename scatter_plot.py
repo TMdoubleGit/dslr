@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import sys
 
+
 def scatter_plots(dataset, features, save_path):
     """
     Generate scatter plots for all possible combinations of features.
@@ -71,6 +72,7 @@ def scatter_plots(dataset, features, save_path):
 
     root.mainloop()
 
+
 def scatter_plots_from_csv(path, save_path):
     """
     Generate scatter plots based on the provided dataset.
@@ -96,6 +98,7 @@ def scatter_plots_from_csv(path, save_path):
 
     except Exception as e:
         print(f"Error: {e}")
+
 
 if __name__ == "__main__":
     av = sys.argv
